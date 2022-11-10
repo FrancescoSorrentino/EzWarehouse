@@ -1,0 +1,102 @@
+.App {
+  text-align: center;
+}
+
+.page {
+  min-height: 100vh;
+  margin: 0%;
+  margin-right: 0px;
+  padding: 0%;
+  background-color: black;
+  color: white;
+  
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.width100 {
+  width: 100%;
+}
+
+.navbar {
+  background-color: transparent;
+  z-index: 10;
+}
+
+.below-nav {
+  padding-top: 5rem;
+  z-index: 10;
+}
+
+
+.main-content{
+  
+    padding: 10vh 0;
+    margin: 0 auto;
+    max-width: 99vh;
+  
+}
+
+.no-flickr{
+  padding: 10vh 0;
+  margin: 0 auto;
+  max-width: 200vh;
+}
+
+.caption-middle{
+  transform: translateY(-50%);
+  bottom: 0;
+  top: 50%;
+}
+
+.notificationIcon {
+position: relative;
+}
+
+.notificationCounter {
+  width: 5px;
+  height: 5px;
+  background-color: red;
+  border-radius: 50%;
+  padding: 5px;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 0px;
+  right: 15px;
+}

@@ -1,0 +1,14 @@
+exports.getRestockOrders = jest.fn();
+exports.getRestockOrder = jest.fn();
+exports.getRestockOrderReturnItems = jest.fn();
+exports.new = jest.fn();
+exports.updateState = jest.fn();
+exports.newReturnItems = jest.fn();
+exports.newTransportNote = jest.fn();
+exports.delete = jest.fn();
+exports.newRestockOrder = jest.fn();
+exports.newProducts = jest.fn();
+exports.newReturnItems = jest.fn();
+exports.newTransportNote = jest.fn();
+exports.getRestockOrderProducts = jest.fn();
+exports.getTransportNote = jest.fn();

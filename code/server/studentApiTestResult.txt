@@ -1,0 +1,1732 @@
+Server listening at http://localhost:3001
+
+
+HERE SKUITEM BEFORE
+  Internal Order Api Test
+InternalOrder Table created
+InternalOrder-Product Table created
+InternalOrder-SkuItem Table created
+User Table is beeing created
+URL:	 /api/internalOrders
+Method:	 POST
+Body:	 {
+  issueDate: 'aa',
+  products: [ { SKUId: 1, description: 'a product', price: 10.99, qty: 3 } ],
+  customerId: 1
+}
+Result {
+  formatter: [Function: formatter],
+  errors: [
+    { msg: 'Invalid value(s)', param: '_error', nestedErrors: [Array] }
+  ]
+}
+ValidationError: Validation failed: 
+_error : Invalid value(s)
+
+    ✔ new internal order: date format invalid (102ms)
+URL:	 /api/internalOrders
+Method:	 POST
+Body:	 {
+  issueDate: '2021/11/29 09:33',
+  products: [ { SKUId: 1, description: 'a product', price: 10.99, qty: 3 } ],
+  customerId: 1
+}
+1
+    ✔ new internal order: add one internal order
+URL:	 /api/internalOrders
+Method:	 GET
+Body:	 {}
+    ✔ get internal orders: get internal orders (63ms)
+URL:	 /api/internalOrdersIssued
+Method:	 GET
+Body:	 {}
+    ✔ get internal order issued: get internal orders issued
+URL:	 /api/internalOrders/1
+Method:	 GET
+Body:	 {}
+    ✔ get internal order: get existing internal order
+URL:	 /api/internalOrders/100
+Method:	 GET
+Body:	 {}
+    ✔ get internal order: not internal order associated to this id
+URL:	 /api/internalOrders/a
+Method:	 GET
+Body:	 {}
+Result {
+  formatter: [Function: formatter],
+  errors: [
+    {
+      value: 'a',
+      msg: 'Invalid value',
+      param: 'id',
+      location: 'params'
+    }
+  ]
+}
+ValidationError: Validation failed: 
+id : Invalid value
+
+    ✔ get internal order: validation param failed
+URL:	 /api/internalOrders/1
+Method:	 PUT
+Body:	 { newState: 'ACCEPTED' }
+    ✔ update internal order: internal order accepted updated (67ms)
+URL:	 /api/internalOrders/1
+Method:	 PUT
+Body:	 {
+  newState: 'COMPLETED',
+  products: [ { SkuID: 1, RFID: '12345678901234567890123456789016' } ]
+}
+    ✔ update internal order: internal order completed updated (130ms)
+URL:	 /api/internalOrdersAccepted
+Method:	 GET
+Body:	 {}
+    ✔ get internal order accepted: get internal orders accepted
+URL:	 /api/internalOrders/100
+Method:	 PUT
+Body:	 { newState: 'ACCEPTED' }
+    ✔ update internal order: id not found
+URL:	 /api/internalOrders/a
+Method:	 DELETE
+Body:	 {}
+Result {
+  formatter: [Function: formatter],
+  errors: [
+    {
+      value: 'a',
+      msg: 'Invalid value',
+      param: 'id',
+      location: 'params'
+    }
+  ]
+}
+ValidationError: Validation failed: 
+id : Invalid value
+
+    ✔ delete internal order: delete validation failed
+URL:	 /api/internalOrders/1
+Method:	 DELETE
+Body:	 {}
+    ✔ delete internal order: delete internal order (65ms)
+User Table is beeing created
+
+  Item Api Test
+User Table is beeing created
+s è 1
+sku è 1
+URL:	 /api/item
+Method:	 POST
+Body:	 {
+  id: 1,
+  description: 'a new item',
+  price: 10.99,
+  SKUId: 100,
+  supplierId: 1
+}
+    ✔ new item: sku not found
+URL:	 /api/item
+Method:	 POST
+Body:	 {
+  id: 1,
+  description: 'a new item',
+  price: 10.99,
+  SKUId: 1,
+  supplierId: 1
+}
+{
+  id: 1,
+  description: 'a new item',
+  price: 10.99,
+  SKUId: 1,
+  supplierId: 1
+}
+    ✔ new item: add one item (86ms)
+URL:	 /api/item
+Method:	 POST
+Body:	 {
+  id: 1,
+  description: 'a new item',
+  price: 10.99,
+  SKUId: 1,
+  supplierId: 1
+}
+{
+  id: 1,
+  description: 'a new item',
+  price: 10.99,
+  SKUId: 1,
+  supplierId: 1
+}
+ValidationError: SQLITE_CONSTRAINT: UNIQUE constraint failed: item.supplierId, item.SKUId
+    ✔ new item: invalid unique constraint
+URL:	 /api/items
+Method:	 GET
+Body:	 {}
+    ✔ get items: get items
+URL:	 /api/items/1/1
+Method:	 GET
+Body:	 {}
+    ✔ get item: get existing item
+URL:	 /api/items/6/2
+Method:	 GET
+Body:	 {}
+    ✔ get item: get item not found
+URL:	 /api/items/invalid/2
+Method:	 GET
+Body:	 {}
+Result {
+  formatter: [Function: formatter],
+  errors: [
+    {
+      value: 'invalid',
+      msg: 'Invalid value',
+      param: 'id',
+      location: 'params'
+    }
+  ]
+}
+ValidationError: Validation failed: 
+id : Invalid value
+
+    ✔ get item: get item invalid id
+URL:	 /api/item/1/1
+Method:	 PUT
+Body:	 { newDescription: 'a new sku', newPrice: 10.99 }
+    ✔ update item: update item (64ms)
+URL:	 /api/item/2/1
+Method:	 PUT
+Body:	 { newDescription: 'a new sku', newPrice: 10.99 }
+    ✔ update item: item not existing
+URL:	 /api/item/1/1
+Method:	 PUT
+Body:	 { newDescription: 'a new sku', newPrice: 'a' }
+Result {
+  formatter: [Function: formatter],
+  errors: [
+    {
+      value: 'a',
+      msg: 'Invalid value',
+      param: 'newPrice',
+      location: 'body'
+    }
+  ]
+}
+ValidationError: Validation failed: 
+newPrice : Invalid value
+
+    ✔ update item: validation body failed
+URL:	 /api/items/a/1
+Method:	 DELETE
+Body:	 {}
+Result {
+  formatter: [Function: formatter],
+  errors: [
+    {
+      value: 'a',
+      msg: 'Invalid value',
+      param: 'id',
+      location: 'params'
+    }
+  ]
+}
+ValidationError: Validation failed: 
+id : Invalid value
+
+    ✔ delete item: delete validation failed
+URL:	 /api/items/1/1
+Method:	 DELETE
+Body:	 {}
+    ✔ delete item: delete item (66ms)
+User Table is beeing created
+
+  Position Api Test
+URL:	 /api/position
+Method:	 POST
+Body:	 {
+  positionID: '800234543412',
+  aisleID: '8002',
+  row: '3454',
+  col: '3412',
+  maxWeight: 1000,
+  maxVolume: 1000
+}
+    ✔ new position: add one position (66ms)
+URL:	 /api/position
+Method:	 POST
+Body:	 {
+  positionID: '800234543413',
+  aisleID: '8002',
+  row: '3454',
+  col: '3412',
+  maxWeight: 1000,
+  maxVolume: 1000
+}
+ValidationError: barcode must be the combination of aisleID, row and col
+    ✔ new position: try to add invalid sku
+URL:	 /api/positions
+Method:	 GET
+Body:	 {}
+    ✔ get positions: get positions
+URL:	 /api/position/800234543412
+Method:	 PUT
+Body:	 {
+  newAisleID: '8002',
+  newRow: '3454',
+  newCol: '3412',
+  newMaxWeight: 1200,
+  newMaxVolume: 600,
+  newOccupiedWeight: 200,
+  newOccupiedVolume: 100
+}
+    ✔ updates position: update position (66ms)
+URL:	 /api/position/800234543421
+Method:	 PUT
+Body:	 {
+  newAisleID: '8002',
+  newRow: '3454',
+  newCol: '3412',
+  newMaxWeight: 1200,
+  newMaxVolume: 600,
+  newOccupiedWeight: 200,
+  newOccupiedVolume: 100
+}
+    ✔ updates position: update positionID not found
+URL:	 /api/position/800234543412
+Method:	 PUT
+Body:	 {
+  newAisleID: '80023',
+  newRow: '3454',
+  newCol: '3412',
+  newMaxWeight: 1200,
+  newMaxVolume: 600,
+  newOccupiedWeight: 200,
+  newOccupiedVolume: 100
+}
+Result {
+  formatter: [Function: formatter],
+  errors: [
+    {
+      value: '80023',
+      msg: 'Invalid value',
+      param: 'newAisleID',
+      location: 'body'
+    }
+  ]
+}
+ValidationError: Validation failed: 
+newAisleID : Invalid value
+
+    ✔ updates position: update invalid positionID
+URL:	 /api/position/800234543412
+Method:	 PUT
+Body:	 {
+  newAisleID: '80023',
+  newRow: '3454',
+  newCol: '3412',
+  newMaxWeight: 1200,
+  newMaxVolume: 600,
+  newOccupiedWeight: 1400,
+  newOccupiedVolume: 100
+}
+Result {
+  formatter: [Function: formatter],
+  errors: [
+    {
+      value: '80023',
+      msg: 'Invalid value',
+      param: 'newAisleID',
+      location: 'body'
+    }
+  ]
+}
+ValidationError: Validation failed: 
+newAisleID : Invalid value
+
+    ✔ updates position: update invalid body
+URL:	 /api/position/800234543421/changeID
+Method:	 PUT
+Body:	 { newPositionID: '800234543413' }
+800234543421
+    ✔ update positionID: update positionID not found
+URL:	 /api/position/800234543412/changeID
+Method:	 PUT
+Body:	 { newPositionID: '8002345434123' }
+Result {
+  formatter: [Function: formatter],
+  errors: [
+    {
+      value: '8002345434123',
+      msg: 'Invalid value',
+      param: 'newPositionID',
+      location: 'body'
+    }
+  ]
+}
+ValidationError: Validation failed: 
+newPositionID : Invalid value
+
+    ✔ update positionID: update invalid body
+URL:	 /api/position/800234543412/changeID
+Method:	 PUT
+Body:	 { newPositionID: '800234543413' }
+800234543412
+    ✔ update positionID: update positionID (67ms)
+URL:	 /api/position/800234543413
+Method:	 DELETE
+Body:	 {}
+    ✔ delete position: delete position (64ms)
+URL:	 /api/position/8002345434134
+Method:	 DELETE
+Body:	 {}
+Result {
+  formatter: [Function: formatter],
+  errors: [
+    {
+      value: '8002345434134',
+      msg: 'Invalid value',
+      param: 'positionID',
+      location: 'params'
+    }
+  ]
+}
+ValidationError: Validation failed: 
+positionID : Invalid value
+
+    ✔ delete position: delete validation failed
+User Table is beeing created
+
+  Restock Order Api Test
+User Table is beeing created
+{
+  id: 1,
+  description: 'a new item',
+  price: 10.99,
+  SKUId: 1,
+  supplierId: 1
+}
+URL:	 /api/restockOrder
+Method:	 POST
+Body:	 {
+  issueDate: '2021/11/29 09:33',
+  products: [
+    {
+      SKUId: 1,
+      itemId: 1,
+      description: 'a product',
+      price: 10.99,
+      qty: 30
+    }
+  ],
+  supplierId: 1
+}
+    ✔ new restock order: add one restock order
+URL:	 /api/restockOrder
+Method:	 POST
+Body:	 {
+  issueDate: 'asddas',
+  products: [
+    {
+      SKUId: 1,
+      itemId: 1,
+      description: 'a product',
+      price: 10.99,
+      qty: 30
+    }
+  ],
+  supplierId: 1
+}
+Result {
+  formatter: [Function: formatter],
+  errors: [
+    { msg: 'Invalid value(s)', param: '_error', nestedErrors: [Array] }
+  ]
+}
+ValidationError: Validation failed: 
+_error : Invalid value(s)
+
+    ✔ new restock order: invalid restock order
+URL:	 /api/restockOrders
+Method:	 GET
+Body:	 {}
+    ✔ get restock orders: get restock orders (52ms)
+URL:	 /api/restockOrdersIssued
+Method:	 GET
+Body:	 {}
+    ✔ get restock order issued: get restock orders issued
+URL:	 /api/restockOrders/1
+Method:	 GET
+Body:	 {}
+    ✔ get restock order: get existing restock order
+URL:	 /api/restockOrders/100
+Method:	 GET
+Body:	 {}
+    ✔ get restock order: not restock order associated to this id
+URL:	 /api/restockOrders/a
+Method:	 GET
+Body:	 {}
+Result {
+  formatter: [Function: formatter],
+  errors: [
+    {
+      value: 'a',
+      msg: 'Invalid value',
+      param: 'id',
+      location: 'params'
+    }
+  ]
+}
+ValidationError: Validation failed: 
+id : Invalid value
+
+    ✔ get restock order: validation param failed
+URL:	 /api/restockOrder/1/skuItems
+Method:	 PUT
+Body:	 {
+  skuItems: [ { SKUId: 1, itemId: 1, rfid: '12345678901234567890123456789016' } ]
+}
+    ✔ update restock order sku items: update return items (88ms)
+URL:	 /api/restockOrder/1/skuItems
+Method:	 PUT
+Body:	 {
+  skuItems: [
+    {
+      SKUId: 'asda',
+      itemId: 1,
+      rfid: '12345678901234567890123456789016'
+    }
+  ]
+}
+Result {
+  formatter: [Function: formatter],
+  errors: [
+    {
+      value: 'asda',
+      msg: 'Invalid value',
+      param: 'skuItems[0].SKUId',
+      location: 'body'
+    }
+  ]
+}
+ValidationError: Validation failed: 
+skuItems[0].SKUId : Invalid value
+
+    ✔ update restock order sku items: invalid return items
+URL:	 /api/restockOrder/100/skuItems
+Method:	 PUT
+Body:	 {
+  skuItems: [ { SKUId: 1, itemId: 1, rfid: '12345678901234567890123456789016' } ]
+}
+    ✔ update restock order sku items: not found
+URL:	 /api/restockOrder/1
+Method:	 PUT
+Body:	 { newState: 'COMPLETEDRETURN' }
+    ✔ update restock order: restock order update state to COMPLETEDRETURN (63ms)
+URL:	 /api/restockOrders/1/returnItems
+Method:	 GET
+Body:	 {}
+    ✔ get restock order return items: get return items
+URL:	 /api/restockOrders/invalid/returnItems
+Method:	 GET
+Body:	 {}
+Result {
+  formatter: [Function: formatter],
+  errors: [
+    {
+      value: 'invalid',
+      msg: 'Invalid value',
+      param: 'id',
+      location: 'params'
+    }
+  ]
+}
+ValidationError: Validation failed: 
+id : Invalid value
+
+    ✔ get restock order return items: invalid restock order
+URL:	 /api/restockOrder/1
+Method:	 PUT
+Body:	 { newState: 'DELIVERY' }
+    ✔ update restock order: restock order accepted updated (63ms)
+URL:	 /api/restockOrder/1
+Method:	 PUT
+Body:	 { newState: 'INVALID' }
+Result {
+  formatter: [Function: formatter],
+  errors: [
+    {
+      value: 'INVALID',
+      msg: 'Invalid value',
+      param: 'newState',
+      location: 'body'
+    }
+  ]
+}
+ValidationError: Validation failed: 
+newState : Invalid value
+
+    ✔ update restock order: invalid state
+URL:	 /api/restockOrder/1/transportNote
+Method:	 PUT
+Body:	 { transportNote: { deliveryDate: '2021/12/29' } }
+    ✔ update restock order transport note: update  transport note (68ms)
+URL:	 /api/restockOrder/1/transportNote
+Method:	 PUT
+Body:	 { transportNote: { deliveryDate: 'invalid' } }
+ValidationError: SQLITE_CONSTRAINT: UNIQUE constraint failed: restockOrder_transportNote.restockOrderID
+    ✔ update restock order transport note: invalid transport note
+URL:	 /api/restockOrder/a
+Method:	 DELETE
+Body:	 {}
+Result {
+  formatter: [Function: formatter],
+  errors: [
+    {
+      value: 'a',
+      msg: 'Invalid value',
+      param: 'id',
+      location: 'params'
+    }
+  ]
+}
+ValidationError: Validation failed: 
+id : Invalid value
+
+    ✔ delete restock order: delete validation failed
+URL:	 /api/restockOrder/1
+Method:	 DELETE
+Body:	 {}
+    ✔ delete restock order: delete restock order (69ms)
+User Table is beeing created
+
+  Return Order Api Test
+ReturnOrder Table created
+ReturnOrder-Products Table created
+User Table is beeing created
+{
+  id: 1,
+  description: 'a new item',
+  price: 10.99,
+  SKUId: 1,
+  supplierId: 1
+}
+URL:	 /api/returnOrder
+Method:	 POST
+Body:	 {
+  returnDate: '2021/11/29 09:33',
+  products: [
+    {
+      SKUId: 1,
+      itemId: 1,
+      description: 'a new sku',
+      RFID: '12345678901234567890123456789017'
+    }
+  ],
+  restockOrderId: 1
+}
+HERE: {
+  returnDate: '2021/11/29 09:33',
+  products: [
+    {
+      SKUId: 1,
+      itemId: 1,
+      description: 'a new sku',
+      RFID: '12345678901234567890123456789017'
+    }
+  ],
+  restockOrderId: 1
+}
+    ✔ new return order: add return order (67ms)
+URL:	 /api/returnOrder
+Method:	 POST
+Body:	 {
+  returnDate: 'invalid',
+  products: [
+    {
+      SKUId: 1,
+      itemId: 1,
+      description: 'a new sku',
+      RFID: '12345678901234567890123456789017'
+    }
+  ],
+  restockOrderId: 1
+}
+Result {
+  formatter: [Function: formatter],
+  errors: [
+    { msg: 'Invalid value(s)', param: '_error', nestedErrors: [Array] }
+  ]
+}
+ValidationError: Validation failed: 
+_error : Invalid value(s)
+
+    ✔ new return order: invalid returnDate
+URL:	 /api/returnOrder
+Method:	 POST
+Body:	 {
+  returnDate: '2021/11/29 09:33',
+  products: [
+    {
+      SKUId: 'invalid',
+      itemId: 1,
+      description: 'a new sku',
+      RFID: '12345678901234567890123456789017'
+    }
+  ],
+  restockOrderId: 1
+}
+Result {
+  formatter: [Function: formatter],
+  errors: [
+    {
+      value: 'invalid',
+      msg: 'Invalid value',
+      param: 'products[0].SKUId',
+      location: 'body'
+    }
+  ]
+}
+ValidationError: Validation failed: 
+products[0].SKUId : Invalid value
+
+    ✔ new return order: invalid products
+URL:	 /api/returnOrder
+Method:	 POST
+Body:	 {
+  returnDate: '2021/11/29 09:33',
+  products: [
+    {
+      SKUId: 1,
+      itemId: 1,
+      description: 'a new sku',
+      RFID: '12345678901234567890123456789017'
+    }
+  ],
+  restockOrderId: 'invalid'
+}
+Result {
+  formatter: [Function: formatter],
+  errors: [
+    {
+      value: 'invalid',
+      msg: 'Invalid value',
+      param: 'restockOrderId',
+      location: 'body'
+    }
+  ]
+}
+ValidationError: Validation failed: 
+restockOrderId : Invalid value
+
+    ✔ new return order: invalid restockOrderId
+URL:	 /api/returnOrder
+Method:	 POST
+Body:	 {
+  returnDate: '2021/11/29 09:33',
+  products: [
+    {
+      SKUId: 1,
+      itemId: 1,
+      description: 'a new sku',
+      RFID: '12345678901234567890123456789017'
+    }
+  ],
+  restockOrderId: 400
+}
+    ✔ new return order: restock order not found
+URL:	 /api/returnOrders/1
+Method:	 GET
+Body:	 {}
+1
+{
+  id: 1,
+  returnDate: '2021/11/29 09:33',
+  restockOrderId: 1,
+  products: [
+    {
+      SKUId: 1,
+      itemId: 1,
+      description: 'a new item',
+      RFID: '12345678901234567890123456789017'
+    }
+  ]
+}
+{
+  id: 1,
+  returnDate: '2021/11/29 09:33',
+  restockOrderId: 1,
+  products: [
+    {
+      SKUId: 1,
+      itemId: 1,
+      description: 'a new item',
+      RFID: '12345678901234567890123456789017'
+    }
+  ]
+}
+    ✔ get return order: get return order
+URL:	 /api/returnOrders/pietro
+Method:	 GET
+Body:	 {}
+Result {
+  formatter: [Function: formatter],
+  errors: [
+    {
+      value: 'pietro',
+      msg: 'Invalid value',
+      param: 'id',
+      location: 'params'
+    }
+  ]
+}
+ValidationError: Validation failed: 
+id : Invalid value
+
+{}
+    ✔ get return order: invalid param
+URL:	 /api/returnOrders/2
+Method:	 GET
+Body:	 {}
+2
+false
+{}
+    ✔ get return order: return order not found
+URL:	 /api/returnOrder/1
+Method:	 DELETE
+Body:	 {}
+    ✔ delete return order: delete return order (64ms)
+URL:	 /api/returnOrder/pietro
+Method:	 DELETE
+Body:	 {}
+Result {
+  formatter: [Function: formatter],
+  errors: [
+    {
+      value: 'pietro',
+      msg: 'Invalid value',
+      param: 'id',
+      location: 'params'
+    }
+  ]
+}
+ValidationError: Validation failed: 
+id : Invalid value
+
+    ✔ delete return order: invalid param
+User Table is beeing created
+
+  Sku Api Test
+URL:	 /api/sku
+Method:	 POST
+Body:	 {
+  description: 'a new sku',
+  weight: 10,
+  volume: 10,
+  notes: 'first SKU',
+  price: 10,
+  availableQuantity: 50
+}
+    ✔ new sku: add one sku (65ms)
+URL:	 /api/sku
+Method:	 POST
+Body:	 {
+  description: 'a new sku',
+  volume: 10,
+  notes: 'first SKU',
+  price: 10.99,
+  availableQuantity: 50
+}
+Result {
+  formatter: [Function: formatter],
+  errors: [
+    {
+      value: 10.99,
+      msg: 'Invalid value',
+      param: 'price',
+      location: 'body'
+    },
+    {
+      value: undefined,
+      msg: 'Invalid value',
+      param: 'weight',
+      location: 'body'
+    }
+  ]
+}
+ValidationError: Validation failed: 
+price : Invalid value
+weight : Invalid value
+
+    ✔ new sku: try to add invalid sku
+URL:	 /api/skus
+Method:	 GET
+Body:	 {}
+    ✔ get skus: get skus
+URL:	 /api/skus/1
+Method:	 GET
+Body:	 {}
+    ✔ get sku: get existing sku
+URL:	 /api/skus/6
+Method:	 GET
+Body:	 {}
+    ✔ get sku: get sku not found
+URL:	 /api/skus/invalid
+Method:	 GET
+Body:	 {}
+Result {
+  formatter: [Function: formatter],
+  errors: [
+    {
+      value: 'invalid',
+      msg: 'Invalid value',
+      param: 'id',
+      location: 'params'
+    }
+  ]
+}
+ValidationError: Validation failed: 
+id : Invalid value
+
+    ✔ get sku: get sku invalid id
+URL:	 /api/sku/1
+Method:	 PUT
+Body:	 {
+  newDescription: 'a new sku',
+  newWeight: 10,
+  newVolume: 5,
+  newNotes: 'first SKU',
+  newPrice: 10.99,
+  newAvailableQuantity: 50
+}
+    ✔ updates sku: update sku (67ms)
+URL:	 /api/sku/6
+Method:	 PUT
+Body:	 {
+  newDescription: 'a new sku',
+  newWeight: 10,
+  newVolume: 5,
+  newNotes: 'first SKU',
+  newPrice: 10.99,
+  newAvailableQuantity: 50
+}
+    ✔ updates sku: update sku not found
+URL:	 /api/sku/invalid
+Method:	 PUT
+Body:	 {
+  newDescription: 'a new sku',
+  newWeight: 10,
+  newVolume: 5,
+  newNotes: 'first SKU',
+  newPrice: 10.99,
+  newAvailableQuantity: 50
+}
+Result {
+  formatter: [Function: formatter],
+  errors: [
+    {
+      value: 'invalid',
+      msg: 'Invalid value',
+      param: 'id',
+      location: 'params'
+    }
+  ]
+}
+ValidationError: Validation failed: 
+id : Invalid value
+
+    ✔ updates sku: update sku invalid ID
+URL:	 /api/sku/1
+Method:	 PUT
+Body:	 { newVolume: 'sdf', newNotes: 'first SKU', newAvailableQuantity: 50 }
+Result {
+  formatter: [Function: formatter],
+  errors: [
+    {
+      value: undefined,
+      msg: 'Invalid value',
+      param: 'newWeight',
+      location: 'body'
+    },
+    {
+      value: 'sdf',
+      msg: 'Invalid value',
+      param: 'newVolume',
+      location: 'body'
+    },
+    {
+      value: undefined,
+      msg: 'Invalid value',
+      param: 'newPrice',
+      location: 'body'
+    }
+  ]
+}
+ValidationError: Validation failed: 
+newWeight : Invalid value
+newVolume : Invalid value
+newPrice : Invalid value
+
+    ✔ updates sku: update sku invalid body
+URL:	 /api/skus/5
+Method:	 DELETE
+Body:	 {}
+    ✔ delete sku: delete sku
+URL:	 /api/skus/invalid
+Method:	 DELETE
+Body:	 {}
+Result {
+  formatter: [Function: formatter],
+  errors: [
+    {
+      value: 'invalid',
+      msg: 'Invalid value',
+      param: 'id',
+      location: 'params'
+    }
+  ]
+}
+ValidationError: Validation failed: 
+id : Invalid value
+
+    ✔ delete sku: delete sku invalid ID
+URL:	 /api/sku/invalid/position
+Method:	 PUT
+Body:	 { position: '800234543412' }
+Result {
+  formatter: [Function: formatter],
+  errors: [
+    {
+      value: 'invalid',
+      msg: 'Invalid value',
+      param: 'id',
+      location: 'params'
+    }
+  ]
+}
+ValidationError: Validation failed: 
+id : Invalid value
+
+    ✔ update sku position: update sku position, invalid ID
+URL:	 /api/sku/6/position
+Method:	 PUT
+Body:	 { position: '800234543412' }
+    ✔ update sku position: update sku position, sku ID not found
+URL:	 /api/sku/1/position
+Method:	 PUT
+Body:	 {}
+Result {
+  formatter: [Function: formatter],
+  errors: [
+    {
+      value: undefined,
+      msg: 'Invalid value',
+      param: 'position',
+      location: 'body'
+    }
+  ]
+}
+ValidationError: Validation failed: 
+position : Invalid value
+
+    ✔ update sku position: update sku position, invalid position
+URL:	 /api/sku/1/position
+Method:	 PUT
+Body:	 { position: '800234543415' }
+ValidationError: Position is not available
+    ✔ update sku position: update sku position, position not available
+User Table is beeing created
+
+  SkuItem Api Test
+1
+{
+  RFID: '12345678901234567890123456789015',
+  SKUId: 1,
+  DateOfStock: '2021/11/29 12:30'
+}
+{
+  RFID: '12345678901234567890123456789015',
+  SKUId: 1,
+  DateOfStock: '2021/11/29 12:30'
+}
+URL:	 /api/skuitem
+Method:	 POST
+Body:	 {
+  RFID: '12345678901234567890123456789015',
+  SKUId: 1,
+  DateOfStock: '2021/11/29 12:30'
+}
+    ✔ new skuitem: add one skuitem (67ms)
+{ RFID: 'pietro', SKUId: 1, DateOfStock: '2021/11/29 12:30' }
+URL:	 /api/skuitem
+Method:	 POST
+Body:	 { RFID: 'pietro', SKUId: 1, DateOfStock: '2021/11/29 12:30' }
+Result {
+  formatter: [Function: formatter],
+  errors: [
+    {
+      value: 'pietro',
+      msg: 'Invalid value',
+      param: 'RFID',
+      location: 'body'
+    },
+    {
+      value: 'pietro',
+      msg: 'Invalid value',
+      param: 'RFID',
+      location: 'body'
+    }
+  ]
+}
+ValidationError: Validation failed: 
+RFID : Invalid value
+RFID : Invalid value
+
+    ✔ new skuitem: invalid RFID
+{
+  RFID: '12345678901234567890123456789015',
+  SKUId: 'pietro',
+  DateOfStock: '2021/11/29 12:30'
+}
+URL:	 /api/skuitem
+Method:	 POST
+Body:	 {
+  RFID: '12345678901234567890123456789015',
+  SKUId: 'pietro',
+  DateOfStock: '2021/11/29 12:30'
+}
+Result {
+  formatter: [Function: formatter],
+  errors: [
+    {
+      value: 'pietro',
+      msg: 'Invalid value',
+      param: 'SKUId',
+      location: 'body'
+    }
+  ]
+}
+ValidationError: Validation failed: 
+SKUId : Invalid value
+
+    ✔ new skuitem: invalid SKUId
+{
+  RFID: '12345678901234567890123456789015',
+  SKUId: 1,
+  DateOfStock: '2555-39-49'
+}
+URL:	 /api/skuitem
+Method:	 POST
+Body:	 {
+  RFID: '12345678901234567890123456789015',
+  SKUId: 1,
+  DateOfStock: '2555-39-49'
+}
+Result {
+  formatter: [Function: formatter],
+  errors: [
+    { msg: 'Invalid value(s)', param: '_error', nestedErrors: [Array] }
+  ]
+}
+ValidationError: Validation failed: 
+_error : Invalid value(s)
+
+    ✔ new skuitem: invalid DateOfStock
+{
+  RFID: '12345678901234567890123456789015',
+  SKUId: 100,
+  DateOfStock: '2021/11/29 12:30'
+}
+URL:	 /api/skuitem
+Method:	 POST
+Body:	 {
+  RFID: '12345678901234567890123456789015',
+  SKUId: 100,
+  DateOfStock: '2021/11/29 12:30'
+}
+    ✔ new skuitem: SKUId not found
+URL:	 /api/skuitems/12345678901234567890123456789015
+Method:	 PUT
+Body:	 {
+  newRFID: '12345678901234567890123456789016',
+  newAvailable: 1,
+  newDateOfStock: '2021/10/11 12:30'
+}
+    ✔ update skuitem: update one skuitem (64ms)
+URL:	 /api/skuitems/pietro
+Method:	 PUT
+Body:	 {
+  newRFID: '12345678901234567890123456789016',
+  newAvailable: 1,
+  newDateOfStock: '2021/10/11 12:30'
+}
+Result {
+  formatter: [Function: formatter],
+  errors: [
+    {
+      value: 'pietro',
+      msg: 'Invalid value',
+      param: 'rfid',
+      location: 'params'
+    },
+    {
+      value: 'pietro',
+      msg: 'Invalid value',
+      param: 'rfid',
+      location: 'params'
+    }
+  ]
+}
+ValidationError: Validation failed: 
+rfid : Invalid value
+rfid : Invalid value
+
+    ✔ update skuitem: invalid param
+URL:	 /api/skuitems/12345678901234567890123456789015
+Method:	 PUT
+Body:	 {
+  newRFID: '12345678901234567890123456789016',
+  newAvailable: 1,
+  newDateOfStock: '2021/44/32'
+}
+Result {
+  formatter: [Function: formatter],
+  errors: [
+    { msg: 'Invalid value(s)', param: '_error', nestedErrors: [Array] }
+  ]
+}
+ValidationError: Validation failed: 
+_error : Invalid value(s)
+
+    ✔ update skuitem: invalid newDateOfStock
+URL:	 /api/skuitems/12345678901234567890123456789015
+Method:	 PUT
+Body:	 {
+  newRFID: '12345678901234567890123456789016',
+  newAvailable: 10,
+  newDateOfStock: '2021/10/11 12:30'
+}
+Result {
+  formatter: [Function: formatter],
+  errors: [
+    {
+      value: 10,
+      msg: 'Invalid value',
+      param: 'newAvailable',
+      location: 'body'
+    }
+  ]
+}
+ValidationError: Validation failed: 
+newAvailable : Invalid value
+
+    ✔ update skuitem: invalid newAvailable
+URL:	 /api/skuitems/12345678901234567890123456789015
+Method:	 PUT
+Body:	 {
+  newRFID: 'pietro',
+  newAvailable: 1,
+  newDateOfStock: '2021/10/11 12:30'
+}
+Result {
+  formatter: [Function: formatter],
+  errors: [
+    {
+      value: 'pietro',
+      msg: 'Invalid value',
+      param: 'newRFID',
+      location: 'body'
+    }
+  ]
+}
+ValidationError: Validation failed: 
+newRFID : Invalid value
+
+    ✔ update skuitem: invalid newRFID
+URL:	 /api/skuitems/12345678901234567890123456789300
+Method:	 PUT
+Body:	 {
+  newRFID: '12345678901234567890123456789016',
+  newAvailable: 1,
+  newDateOfStock: '2021/10/11 12:30'
+}
+    ✔ update skuitem: skuitem not found
+URL:	 /api/skuitems/12345678901234567890123456789016
+Method:	 DELETE
+Body:	 {}
+    ✔ delete skuitem: delete one skuitem (64ms)
+URL:	 /api/skuitems/pietro
+Method:	 DELETE
+Body:	 {}
+Result {
+  formatter: [Function: formatter],
+  errors: [
+    {
+      value: 'pietro',
+      msg: 'Invalid value',
+      param: 'rfid',
+      location: 'params'
+    },
+    {
+      value: 'pietro',
+      msg: 'Invalid value',
+      param: 'rfid',
+      location: 'params'
+    }
+  ]
+}
+ValidationError: Validation failed: 
+rfid : Invalid value
+rfid : Invalid value
+
+    ✔ delete skuitem: invalid RFID
+User Table is beeing created
+
+  testdescriptor Api Test
+URL:	 /api/testDescriptor
+Method:	 POST
+Body:	 {
+  name: 'test descriptor 1',
+  procedureDescription: 'This test is described by...',
+  idSKU: 1
+}
+    ✔ new testdescriptor: add a td: valid (65ms)
+URL:	 /api/testDescriptor
+Method:	 POST
+Body:	 {
+  name: 'test descriptor 1',
+  procedureDescription: 'This test is described by...',
+  idSKU: 101
+}
+    ✔ new testdescriptor: add a td: invalid idSKU
+URL:	 /api/testDescriptors
+Method:	 GET
+Body:	 {}
+    ✔ get testdescriptors: get all tds
+URL:	 /api/testDescriptors/1
+Method:	 GET
+Body:	 {}
+    ✔ get testdescriptors: get td by id: success
+URL:	 /api/testDescriptors/123
+Method:	 GET
+Body:	 {}
+    ✔ get testdescriptors: get td by id: not exist
+URL:	 /api/testDescriptors/qwd
+Method:	 GET
+Body:	 {}
+Result {
+  formatter: [Function: formatter],
+  errors: [
+    {
+      value: 'qwd',
+      msg: 'Invalid value',
+      param: 'id',
+      location: 'params'
+    }
+  ]
+}
+ValidationError: Validation failed: 
+id : Invalid value
+
+    ✔ get testdescriptors: get td by id: not numeric tdId
+URL:	 /api/testDescriptors/1
+Method:	 GET
+Body:	 {}
+    ✔ get testdescriptors: get td by id: tdId is a numeric string
+URL:	 /api/testDescriptors/41
+Method:	 GET
+Body:	 {}
+    ✔ get testdescriptors: get td by id: tdId is a not exists numeric string
+URL:	 /api/testDescriptor/1
+Method:	 PUT
+Body:	 {
+  newName: 'new name',
+  newProcedureDescription: 'new pro',
+  newIdSKU: 1
+}
+    ✔ update testdescriptor: update a td: valid (85ms)
+URL:	 /api/testDescriptor/2
+Method:	 PUT
+Body:	 {
+  newName: 'new name',
+  newProcedureDescription: 'new pro',
+  newIdSKU: 1
+}
+    ✔ update testdescriptor: update a td: which not exists
+URL:	 /api/testDescriptor/1
+Method:	 PUT
+Body:	 {
+  newName: 'new name',
+  newProcedureDescription: 'new pro',
+  newIdSKU: 101
+}
+    ✔ update testdescriptor: update a td: invalid idSKU
+URL:	 /api/testDescriptor/a
+Method:	 PUT
+Body:	 {
+  newName: 'new name',
+  newProcedureDescription: 'new pro',
+  newIdSKU: 1
+}
+Result {
+  formatter: [Function: formatter],
+  errors: [
+    {
+      value: 'a',
+      msg: 'Invalid value',
+      param: 'id',
+      location: 'params'
+    }
+  ]
+}
+ValidationError: Validation failed: 
+id : Invalid value
+
+    ✔ update testdescriptor: update a td: id is not numeric
+URL:	 /api/testDescriptor/1
+Method:	 PUT
+Body:	 {
+  newName: 'new name',
+  newProcedureDescription: 'new pro',
+  newIdSKU: 1
+}
+    ✔ update testdescriptor: update a td: id is a numeric string
+URL:	 /api/testDescriptor/1
+Method:	 PUT
+Body:	 {
+  newName: 'new name',
+  newProcedureDescription: 'new pro',
+  newIdSKU: '1'
+}
+    ✔ update testdescriptor: update a td: skuId is a numeric string
+URL:	 /api/testDescriptor/1
+Method:	 PUT
+Body:	 {
+  newName: 'new name',
+  newProcedureDescription: 'new pro',
+  newIdSKU: '101'
+}
+    ✔ update testdescriptor: update a td: skuId is a invalid numeric string
+URL:	 /api/testDescriptor/1
+Method:	 PUT
+Body:	 {
+  newName: 'new name',
+  newProcedureDescription: 'new pro',
+  newIdSKU: 'skuid'
+}
+Result {
+  formatter: [Function: formatter],
+  errors: [
+    {
+      value: 'skuid',
+      msg: 'Invalid value',
+      param: 'newIdSKU',
+      location: 'body'
+    }
+  ]
+}
+ValidationError: Validation failed: 
+newIdSKU : Invalid value
+
+    ✔ update testdescriptor: update a td: skuId is a not numeric
+URL:	 /api/testDescriptor/31
+Method:	 DELETE
+Body:	 {}
+    ✔ update testdescriptor: delete a td: id not exists
+URL:	 /api/testDescriptor/asd
+Method:	 DELETE
+Body:	 {}
+Result {
+  formatter: [Function: formatter],
+  errors: [
+    {
+      value: 'asd',
+      msg: 'Invalid value',
+      param: 'id',
+      location: 'params'
+    }
+  ]
+}
+ValidationError: Validation failed: 
+id : Invalid value
+
+    ✔ update testdescriptor: delete a td: id not numeric string
+URL:	 /api/testDescriptor/1
+Method:	 DELETE
+Body:	 {}
+    ✔ update testdescriptor: delete a td: success (65ms)
+User Table is beeing created
+
+  testresult Api Test
+URL:	 /api/skuitems/testResult
+Method:	 POST
+Body:	 {
+  rfid: '12345678901234567890123456789019',
+  idTestDescriptor: 1,
+  Date: '2021/11/28',
+  Result: true
+}
+    ✔ new testresult: valid testResult (66ms)
+URL:	 /api/skuitems/testResult
+Method:	 POST
+Body:	 {
+  rfid: 'invalid',
+  idTestDescriptor: 1,
+  Date: '2021/11/28',
+  Result: true
+}
+Result {
+  formatter: [Function: formatter],
+  errors: [
+    {
+      value: 'invalid',
+      msg: 'Invalid value',
+      param: 'rfid',
+      location: 'body'
+    },
+    {
+      value: 'invalid',
+      msg: 'Invalid value',
+      param: 'rfid',
+      location: 'body'
+    }
+  ]
+}
+ValidationError: Validation failed: 
+rfid : Invalid value
+rfid : Invalid value
+
+    ✔ new testresult: invalid testResult
+URL:	 /api/skuitems/testResult
+Method:	 POST
+Body:	 {
+  rfid: '12345678901234567890123456789018',
+  idTestDescriptor: 1,
+  Date: '2021/11/28',
+  Result: true
+}
+    ✔ new testresult: not found rfid
+URL:	 /api/skuitems/12345678901234567890123456789019/testResults
+Method:	 GET
+Body:	 {}
+    ✔ get testresults: get testResults
+URL:	 /api/skuitems/invalid/testResults
+Method:	 GET
+Body:	 {}
+Result {
+  formatter: [Function: formatter],
+  errors: [
+    {
+      value: 'invalid',
+      msg: 'Invalid value',
+      param: 'rfid',
+      location: 'params'
+    },
+    {
+      value: 'invalid',
+      msg: 'Invalid value',
+      param: 'rfid',
+      location: 'params'
+    }
+  ]
+}
+ValidationError: Validation failed: 
+rfid : Invalid value
+rfid : Invalid value
+
+    ✔ get testresults: invalid rfid
+URL:	 /api/skuitems/12345678901234567890123456789018/testResults
+Method:	 GET
+Body:	 {}
+    ✔ get testresults: not found rfid
+URL:	 /api/skuitems/12345678901234567890123456789019/testResults/1
+Method:	 GET
+Body:	 {}
+    ✔ get testresult: get testResult
+URL:	 /api/skuitems/12345678901234567890123456789019/testResults/invalid
+Method:	 GET
+Body:	 {}
+Result {
+  formatter: [Function: formatter],
+  errors: [
+    {
+      value: 'invalid',
+      msg: 'Invalid value',
+      param: 'id',
+      location: 'params'
+    }
+  ]
+}
+ValidationError: Validation failed: 
+id : Invalid value
+
+    ✔ get testresult: invalid id
+URL:	 /api/skuitems/12345678901234567890123456789018/testResults/1
+Method:	 GET
+Body:	 {}
+    ✔ get testresult: not found rfid
+URL:	 /api/skuitems/12345678901234567890123456789019/testResults/100
+Method:	 GET
+Body:	 {}
+    ✔ get testresult: not found id
+URL:	 /api/skuitems/12345678901234567890123456789019/testResult/1
+Method:	 PUT
+Body:	 { newIdTestDescriptor: 1, newDate: '2021/11/28', newResult: true }
+    ✔ update testresult: update testResult
+URL:	 /api/skuitems/12345678901234567890123456789019/testResult/1
+Method:	 PUT
+Body:	 { newIdTestDescriptor: 1, newDate: 'invalid', newResult: true }
+Result {
+  formatter: [Function: formatter],
+  errors: [
+    {
+      value: 'invalid',
+      msg: 'Invalid value',
+      param: 'newDate',
+      location: 'body'
+    }
+  ]
+}
+ValidationError: Validation failed: 
+newDate : Invalid value
+
+    ✔ update testresult: invalid new testResult
+URL:	 /api/skuitems/12345678901234567890123456789018/testResult/1
+Method:	 PUT
+Body:	 { newIdTestDescriptor: 1, newDate: '2021/11/28', newResult: true }
+    ✔ update testresult: not found rfid
+URL:	 /api/skuitems/12345678901234567890123456789019/testResult/1
+Method:	 PUT
+Body:	 { newIdTestDescriptor: 100, newDate: '2021/11/28', newResult: true }
+    ✔ update testresult: new test descriptor not found
+URL:	 /api/skuitems/12345678901234567890123456789019/testResult/a
+Method:	 DELETE
+Body:	 {}
+    ✔ update testdescriptor: delete validation failed
+URL:	 /api/skuitems/12345678901234567890123456789019/testResult/1
+Method:	 DELETE
+Body:	 {}
+    ✔ update testdescriptor: delete testResult order (72ms)
+User Table is beeing created
+
+  User Api Test
+URL:	 /api/newUser
+Method:	 POST
+Body:	 {
+  username: 'test1111@ezwh.it',
+  password: 'gigachad@123456',
+  name: 'giga',
+  surname: 'chad',
+  type: 'clerk'
+}
+    ✔ new user: 1 (75ms)
+URL:	 /api/newUser
+Method:	 POST
+Body:	 {
+  username: 'test1111@ezwh.it',
+  password: 'gigachad@123456',
+  name: 'giga',
+  surname: 'chad',
+  type: 'clerk'
+}
+ConflictError: Conflict
+    ✔ new user: 2
+URL:	 /api/newUser
+Method:	 POST
+Body:	 {
+  username: 'p',
+  password: 'gigachad@123456',
+  name: 'giga',
+  surname: 'chad',
+  type: 'clerk'
+}
+Result {
+  formatter: [Function: formatter],
+  errors: [
+    {
+      value: 'p',
+      msg: 'Invalid value',
+      param: 'username',
+      location: 'body'
+    }
+  ]
+}
+ValidationError: Validation failed: 
+username : Invalid value
+
+    ✔ new user: 3
+URL:	 /api/newUser
+Method:	 POST
+Body:	 {
+  username: 'test1111@ezwh.it',
+  password: 'p',
+  name: 'giga',
+  surname: 'chad',
+  type: 'CEO'
+}
+Result {
+  formatter: [Function: formatter],
+  errors: [
+    {
+      value: 'p',
+      msg: 'Invalid value',
+      param: 'password',
+      location: 'body'
+    },
+    {
+      value: 'CEO',
+      msg: 'Invalid value',
+      param: 'type',
+      location: 'body'
+    }
+  ]
+}
+ValidationError: Validation failed: 
+password : Invalid value
+type : Invalid value
+
+    ✔ new user: 4
+URL:	 /api/users/test1111@ezwh.it/clerk
+Method:	 DELETE
+Body:	 {}
+    ✔ delete user: 1 (62ms)
+URL:	 /api/users/p/clerk
+Method:	 DELETE
+Body:	 {}
+Result {
+  formatter: [Function: formatter],
+  errors: [
+    {
+      value: 'p',
+      msg: 'Invalid value',
+      param: 'username',
+      location: 'params'
+    }
+  ]
+}
+ValidationError: Validation failed: 
+username : Invalid value
+
+    ✔ delete user: 2
+URL:	 /api/users/test1111@ezwh.it/manager
+Method:	 DELETE
+Body:	 {}
+Result {
+  formatter: [Function: formatter],
+  errors: [
+    {
+      value: 'manager',
+      msg: 'Invalid value',
+      param: 'type',
+      location: 'params'
+    }
+  ]
+}
+ValidationError: Validation failed: 
+type : Invalid value
+
+    ✔ delete user: 3
+AFTER
+User Table is beeing created
+
+
+  137 passing (26s)
+
